@@ -1,10 +1,10 @@
 package main
 
 import (
+	"github.com/codegangsta/cli"
 	"log"
 	"os"
-
-	"github.com/codegangsta/cli"
+	"os/exec"
 )
 
 var Commands = []cli.Command{
@@ -32,4 +32,14 @@ func assert(err error) {
 }
 
 func doCheck(c *cli.Context) {
+
+	cmd := exec.Command("npm", "list", "--json=true")
+	stdout, err := cmd.Output()
+
+	if err != nil {
+		println(err.Error())
+		return
+	}
+
+	print(string(stdout))
 }
