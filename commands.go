@@ -32,5 +32,6 @@ func assert(err error) {
 
 func doNpm(c *cli.Context) {
 	dir := c.Args()[0]
-	Npm(dir)
+	keywords := Npm(dir)
+	println(keywords)
 }
