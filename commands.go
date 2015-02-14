@@ -4,19 +4,18 @@ import (
 	"github.com/codegangsta/cli"
 	"log"
 	"os"
-	"os/exec"
 )
 
 var Commands = []cli.Command{
-	commandCheck,
+	commandNpm,
 }
 
-var commandCheck = cli.Command{
-	Name:  "check",
+var commandNpm = cli.Command{
+	Name:  "npm",
 	Usage: "",
 	Description: `
 `,
-	Action: doCheck,
+	Action: doNpm,
 }
 
 func debug(v ...interface{}) {
@@ -31,15 +30,7 @@ func assert(err error) {
 	}
 }
 
-func doCheck(c *cli.Context) {
-
-	cmd := exec.Command("npm", "list", "--json=true")
-	stdout, err := cmd.Output()
-
-	if err != nil {
-		println(err.Error())
-		return
-	}
-
-	print(string(stdout))
+func doNpm(c *cli.Context) {
+	dir := c.Args()[0]
+	Npm(dir)
 }
