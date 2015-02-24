@@ -6,12 +6,12 @@ import (
 	"os/exec"
 )
 
-var Npm = func(dir string) string{
+var Npm = func(dir string) []string {
 
 	err := os.Chdir(dir)
 	if err != nil {
 		println(err.Error())
-		return ""
+		return nil
 	}
 
 	cmd := exec.Command("npm", "list", "--json=true")
@@ -19,22 +19,25 @@ var Npm = func(dir string) string{
 
 	if err != nil {
 		println(err.Error())
-		return ""
+		return nil
 	}
-
-	debug(stdout)
 
 	v, err := jason.NewObjectFromBytes(stdout)
-	// name, err := v.GetString("name")
-
-	dependencies, err := v.GetObject("dependencies")
-
-	// todo : 配列への対応
-	var keyword string
-	for name, _ := range dependencies.Map() {
-		keyword = name
+	if err != nil {
+		println(err.Error())
+		return nil
 	}
 
+	dependencies, err := v.GetObject("dependencies")
+	if err != nil {
+		println(err.Error())
+		return nil
+	}
 
-	return keyword
+	var keywords []string
+	for name, _ := range dependencies.Map() {
+		keywords = append(keywords, name)
+	}
+
+	return keywords
 }
