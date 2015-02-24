@@ -5,6 +5,10 @@ packages-with-jvn
 
 ## Usage
 
+```bash
+$ ./packages-with-jvn npm examples/npm/
+```
+
 ## Install
 
 To install, use `go get`:
