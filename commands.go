@@ -34,4 +34,7 @@ func doNpm(c *cli.Context) {
 	dir := c.Args()[0]
 	keywords := Npm(dir)
 	println(keywords)
+	for  _, keyword := range keywords {
+		Jvn(keyword)
+	}
 }
